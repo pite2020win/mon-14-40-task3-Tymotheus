@@ -28,3 +28,61 @@
 #
 #Delete these comments before commit!
 #Good luck.
+class Student:
+  def __init__(self, name, grades):
+    self.name = name
+    self.grades = grades
+  
+  def get_average(self):
+    return sum(self.grades) / len(self.grades)
+
+  def __str__(self):
+    return self.name
+
+class Class:
+  def __init__(self, name, students):
+    self.name = name
+    self.students = students
+
+  def class_average(self):
+    if len(self.students) == 0:
+      print("No students in a class")
+    else:
+      return map(lambda stud: stud.get_average(), self.students )
+  
+  def print_students(self):
+      for i in range(len(self.students)):
+        print("{}. {}".format(i+1,self.students[i]))
+
+
+class School:
+  classes = []
+  def __init__(self, name, classes=[]):
+    self.name = name
+    self.classes = [classes]
+  
+  def total_average(self):
+    sum_of_averages = 0
+    number_of_students = 0
+    for c in self.classes:
+      for student in c.students:
+        sum_of_averages += student.get_average()
+        number_of_students +=1
+    return sum_of_averages/number_of_students
+        
+
+def main():
+  print("That's a class diary")
+  students = []
+  students.append(Student("Johnny Mnemonic", [4.0, 5.0, 4.5]))
+  students.append(Student("Paul Atreides", [5.0, 5.0, 5.0]))
+  students.append(Student("Samuel L. Jackson", [4.0, 4.0, 4.5]))
+  class1 = Class("1A", students)
+  class1.print_students()
+  school1 = School(["Monster High"], class1)
+  print("Shool average: {}".format(school1.total_average()))
+
+
+#if __name__ == "main":
+#with above line code was not running
+main()
