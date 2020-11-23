@@ -1,0 +1,53 @@
+{
+    "1A": {
+        "Duncan Idaho": [
+            4.0,
+            5.0,
+            4.5
+        ],
+        "Paul Atreides": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Gurney Halleck": [
+            4.0,
+            4.0,
+            4.5
+        ],
+        "Leto Atreides": [
+            5.0,
+            4.0,
+            4.5
+        ],
+        "Thufir Hawat": [
+            5.0,
+            4.0,
+            4.5
+        ],
+        "Miles Teg": [
+            5.0,
+            5.0,
+            5.0,
+            4.5
+        ]
+    },
+    "1B": {
+        "Vladimir Harkonnen": [
+            3.0,
+            3.0,
+            3.0,
+            3.0
+        ],
+        "Feyd Rautha": [
+            4.0,
+            2.0,
+            5.0
+        ],
+        "Peter de Vries": [
+            4.0,
+            3.5,
+            4.0
+        ]
+    }
+}

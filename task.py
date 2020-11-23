@@ -1,88 +1,46 @@
-# Class diary
-#
-# Create program for handling lesson scores.
-# Use python to handle student (highscool) class scores, and attendance.
-# Make it possible to:
-# - Get students total average score (average across classes)
-# - get students average score in class
-# - hold students name and surname
-# - Count total attendance of student
-#
-# Please, use your imagination and create more functionalities.
-# Your project should be able to handle entire school(s?).
-# If you have enough courage and time, try storing (reading/writing)
-# data in text files (YAML, JSON).
-# If you have even more courage, try implementing user interface (might be text-like).
-#
-#Try to expand your implementation as best as you can. 
-#Think of as many features as you can, and try implementing them.
-#Make intelligent use of pythons syntactic sugar (overloading, iterators, generators, etc)
-#Most of all: CREATE GOOD, RELIABLE, READABLE CODE.
-#The goal of this task is for you to SHOW YOUR BEST python programming skills.
-#Impress everyone with your skills, show off with your code.
-#
-#Your program must be runnable with command "python task.py".
-#Show some usecases of your library in the code (print some things)
-#
-#When you are done upload this code to your github repository. 
-#
-#Delete these comments before commit!
-#Good luck.
-class Student:
-  def __init__(self, name, grades):
-    self.name = name
-    self.grades = grades
-  
-  def get_average(self):
-    return sum(self.grades) / len(self.grades)
+from School import School, Student, Class
+import logging
 
-  def __str__(self):
-    return self.name
-
-class Class:
-  def __init__(self, name, students):
-    self.name = name
-    self.students = students
-
-  def class_average(self):
-    if len(self.students) == 0:
-      print("No students in a class")
-    else:
-      return map(lambda stud: stud.get_average(), self.students )
-  
-  def print_students(self):
-      for i in range(len(self.students)):
-        print("{}. {}".format(i+1,self.students[i]))
-
-
-class School:
-  classes = []
-  def __init__(self, name, classes=[]):
-    self.name = name
-    self.classes = [classes]
-  
-  def total_average(self):
-    sum_of_averages = 0
-    number_of_students = 0
-    for c in self.classes:
-      for student in c.students:
-        sum_of_averages += student.get_average()
-        number_of_students +=1
-    return sum_of_averages/number_of_students
-        
 
 def main():
-  print("That's a class diary")
-  students = []
-  students.append(Student("Johnny Mnemonic", [4.0, 5.0, 4.5]))
-  students.append(Student("Paul Atreides", [5.0, 5.0, 5.0]))
-  students.append(Student("Samuel L. Jackson", [4.0, 4.0, 4.5]))
-  class1 = Class("1A", students)
-  class1.print_students()
-  school1 = School(["Monster High"], class1)
-  print("Shool average: {}".format(school1.total_average()))
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
+
+    logging.info("Initialising the class diary")
+    students = [Student("Duncan Idaho", [4.0, 5.0, 4.5]), Student("Paul Atreides", [5.0, 5.0, 5.0]),
+                Student("Gurney Halleck", [4.0, 4.0, 4.5]), Student("Leto Atreides", [5.0, 4.0, 4.5]),
+                Student("Thufir Hawat", [5.0, 4.0, 4.5]), Student("Miles Teg", [5.0, 5.0, 5.0, 4.5])]
+
+    students_more = [Student("Vladimir Harkonnen", [3.0, 3.0, 3.0, 3.0]), Student("Feyd Rautha", [4.0, 2.0, 5.0]),
+                     Student("Peter de Vries", [4.0, 3.5, 4.0])]
+
+    students_other_school = [Student("Shaddam Corrino", [4.0, 3.5]), Student("Irulan Corrino", [4.5, 4.5]),
+                             Student("Farad'n Corrino", [5.0, 5.0, 4.5])]
+    class1 = Class("1A", students)
+    class2 = Class("1B", students_more)
+    class3 = Class("3C", students_other_school)
+
+    class3.print_students()
+    logging.info("Class {} average is {}".format(class3.name, class3.class_average()))
+
+    school1 = School("Arrakis", [class1, class2])
+    school2 = School("Salusa Secundus", [class3])
+    logging.info("\nGetting the overall school average")
+    logging.info("School {} average: {}".format(school1.name, school1.total_average()))
+    logging.info("School {} average: {}".format(school2.name, school2.total_average()))
+
+    logging.info("\nChecking average by student's name and class name")
+    logging.info("Average of {} is {}".format("Paul Atreides", school1.get_student_average("1A", "Paul Atreides")))
+    logging.info("\nChecking average of non existing student")
+    logging.info("Average of {} is {}".format("Serena Butler", school1.get_student_average("0X", "Serena Butler")))
+
+    logging.info("\nGetting full information about the particular student")
+    logging.info(school1.classes[0].students[0].get_full_info())
+
+    logging.info("")
+    school1.print_all_students()
+    school1.save_school_to_json()
+    school2.save_school_to_json()
 
 
-#if __name__ == "main":
-#with above line code was not running
-main()
+if __name__ == "__main__":
+    main()
